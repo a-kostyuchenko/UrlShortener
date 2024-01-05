@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using UrlShortener;
+using UrlShortener.Entities;
 using UrlShortener.Extensions;
+using UrlShortener.Models;
 using UrlShortener.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,6 +24,44 @@ if (app.Environment.IsDevelopment())
     
     app.ApplyMigrations();
 }
+
+app.MapPost("api/shorten", async (
+    ShortenedUrlRequest request,
+    UrlShorteningService urlShorteningService,
+    ApplicationDbContext dbContext,
+    HttpContext httpContext) =>
+{
+    if (!Uri.TryCreate(request.Url, UriKind.Absolute, out _))
+    {
+        return Results.BadRequest("The specified URL is invalid");
+    }
+
+    var code = await urlShorteningService.GenerateUniqueCode();
+
+    var shortenedUrl = new ShortenedUrl
+    {
+        Id = Guid.NewGuid(),
+        LongUrl = request.Url,
+        ShortUrl = $"{httpContext.Request.Scheme}://{httpContext.Request.Host}/api/{code}",
+        Code = code,
+        CreatedOnUtc = DateTime.UtcNow
+    };
+
+    dbContext.ShortenedUrls.Add(shortenedUrl);
+    await dbContext.SaveChangesAsync();
+
+    return Results.Ok(shortenedUrl.ShortUrl);
+});
+
+app.MapGet("api/{code}", async (string code, ApplicationDbContext dbContext) =>
+{
+    var shortenedUrl = await dbContext.ShortenedUrls
+        .FirstOrDefaultAsync(s => s.Code == code);
+
+    return shortenedUrl is null 
+        ? Results.NotFound() 
+        : Results.Redirect(shortenedUrl.LongUrl);
+});
 
 app.UseHttpsRedirection();
 
