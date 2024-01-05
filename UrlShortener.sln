@@ -1,0 +1,21 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrlShortener", "UrlShortener\UrlShortener.csproj", "{1658CCD9-65F1-4C9A-8FD5-163D3B92D328}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{E7F03D32-7A2A-4175-A47F-1C4BBFEBBE74}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1658CCD9-65F1-4C9A-8FD5-163D3B92D328}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1658CCD9-65F1-4C9A-8FD5-163D3B92D328}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1658CCD9-65F1-4C9A-8FD5-163D3B92D328}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1658CCD9-65F1-4C9A-8FD5-163D3B92D328}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1658CCD9-65F1-4C9A-8FD5-163D3B92D328} = {E7F03D32-7A2A-4175-A47F-1C4BBFEBBE74}
+	EndGlobalSection
+EndGlobal
